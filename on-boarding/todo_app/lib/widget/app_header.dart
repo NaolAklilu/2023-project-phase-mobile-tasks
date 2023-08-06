@@ -10,7 +10,11 @@ class AppHeader extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Icon(Icons.arrow_back_ios),
+        GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.arrow_back_ios)),
         Text(
           title,
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
