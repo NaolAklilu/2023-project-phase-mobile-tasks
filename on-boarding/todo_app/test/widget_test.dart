@@ -1,30 +1,114 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:todo_app/main.dart';
+import 'package:todo_app/screen/add_tasks.dart';
+import 'package:todo_app/screen/on_boarding.dart';
+import 'package:todo_app/screen/todo_list.dart';
+import 'package:todo_app/widget/app_header.dart';
+import 'package:todo_app/widget/list_item.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets("My Screen has Column widgets", (WidgetTester tester) async {
+    // Arrange
+    await tester.pumpWidget(MaterialApp(home: AddTask()));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Act
+    final columns = find.byType(Column);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Assert
+    expect(columns, findsNWidgets(2));
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  testWidgets("My Screen has Divider Widget", (WidgetTester tester) async {
+    // Arrange
+    await tester.pumpWidget(MaterialApp(home: AddTask()));
+
+    // Act
+    final div = find.byType(Divider);
+
+    // Assert
+    expect(div, findsOneWidget);
+  });
+
+  testWidgets("My Screen has Text Widget", (WidgetTester tester) async {
+    // Arrange
+    await tester.pumpWidget(MaterialApp(home: AddTask()));
+
+    // Act
+    var task = find.text("Main task name");
+    var date = find.text("Due Date");
+    var description = find.text("Description");
+
+    // Assert
+    expect(task, findsOneWidget);
+    expect(date, findsOneWidget);
+    expect(description, findsOneWidget);
+  });
+
+  testWidgets("My Screen has Button Widget", (WidgetTester tester) async {
+    // Arrange
+    await tester.pumpWidget(MaterialApp(home: AddTask()));
+
+    // Act
+    var button = find.byType(ElevatedButton);
+
+    // Assert
+    expect(button, findsOneWidget);
+  });
+
+  testWidgets("My Screen has Elevated Button Widget",
+      (WidgetTester tester) async {
+    // Arrange
+    await tester.pumpWidget(MaterialApp(home: OnBoardingScreen()));
+
+    // Act
+    var button = find.byType(ElevatedButton);
+
+    // Assert
+    expect(button, findsOneWidget);
+  });
+
+  testWidgets("My Screen has Container Widget", (WidgetTester tester) async {
+    // Arrange
+    await tester.pumpWidget(MaterialApp(home: OnBoardingScreen()));
+
+    // Act
+    var container = find.byType(Container);
+
+    // Assert
+    expect(container, findsNWidgets(2));
+  });
+
+  testWidgets("My Screen has Column Widget", (WidgetTester tester) async {
+    // Arrange
+    await tester.pumpWidget(MaterialApp(home: OnBoardingScreen()));
+
+    // Act
+    var col = find.byType(Column);
+
+    // Assert
+    expect(col, findsOneWidget);
+  });
+
+  testWidgets("My Screen has Row Widget", (WidgetTester tester) async {
+    // Arrange
+    await tester.pumpWidget(MaterialApp(home: OnBoardingScreen()));
+
+    // Act
+    var row = find.byType(Row);
+
+    // Assert
+    expect(row, findsOneWidget);
+  });
+
+  // Task List Test
+  testWidgets("My Screen has Column Widget", (WidgetTester tester) async {
+    // Arrange
+    await tester.pumpWidget(TodoList());
+
+    // Act
+    var detector = find.byType(GestureDetector);
+
+    // Assert
+    expect(detector, findsNWidgets(4));
   });
 }
