@@ -1,4 +1,7 @@
-class TaskDomain {
+import 'package:equatable/equatable.dart';
+
+// ignore: must_be_immutable
+class TaskDomain extends Equatable {
   String name;
   String duedate;
   String description;
@@ -10,4 +13,12 @@ class TaskDomain {
     required this.description,
     required this.isCompleted,
   });
+
+  @override
+  List<Object?> get props => [
+        name,
+        duedate,
+        description,
+        isCompleted,
+      ];
 }
