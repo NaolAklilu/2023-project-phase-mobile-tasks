@@ -1,8 +1,14 @@
 # todo_app
 
-A new Flutter project.
+This app is flutter app allows the user to add tasks.
 
 ## Getting Started
+
+To Run the app you can use this command:
+- flutter run
+
+To test this app:
+- flutter test
 
 This project is a starting point for a Flutter application.
 
