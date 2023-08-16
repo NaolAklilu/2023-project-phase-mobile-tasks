@@ -1,6 +1,6 @@
 # todo_app
 
-This app is flutter app allows the user to add tasks.
+This app is flutter app allows the user to add tasks. It is developed using Clean Architecture and TDD.
 
 ## Getting Started
 
