@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/screen/add_tasks.dart';
-import 'package:todo_app/screen/on_boarding.dart';
-import 'package:todo_app/screen/task_detail.dart';
-import 'package:todo_app/screen/todo_list.dart';
+import 'package:todo_app/Todo%20Task/presentation/pages/add_tasks.dart';
+import 'package:todo_app/Todo%20Task/presentation/pages/on_boarding.dart';
+import 'package:todo_app/Todo%20Task/presentation/pages/todo_list.dart';
 
 class Routes {
   static const String onBoarding = "onBoard";
@@ -14,8 +13,7 @@ class Routes {
     return {
       Routes.onBoarding: (context) => OnBoardingScreen(),
       Routes.addTask: (context) => AddTask(),
-      Routes.list: (context) => TodoList(),
-      Routes.detail: (context) => TaskDetail(),
+      Routes.list: (context) => TodoList()
     };
   }
 }

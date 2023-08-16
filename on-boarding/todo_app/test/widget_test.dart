@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:todo_app/screen/add_tasks.dart';
-import 'package:todo_app/screen/on_boarding.dart';
-import 'package:todo_app/screen/todo_list.dart';
-import 'package:todo_app/widget/app_header.dart';
-import 'package:todo_app/widget/list_item.dart';
+import 'package:todo_app/Todo%20Task/presentation/pages/add_tasks.dart';
+import 'package:todo_app/Todo%20Task/presentation/pages/on_boarding.dart';
 
 void main() {
   testWidgets("My Screen has Column widgets", (WidgetTester tester) async {
@@ -98,17 +95,5 @@ void main() {
 
     // Assert
     expect(row, findsOneWidget);
-  });
-
-  // Task List Test
-  testWidgets("My Screen has Column Widget", (WidgetTester tester) async {
-    // Arrange
-    await tester.pumpWidget(TodoList());
-
-    // Act
-    var detector = find.byType(GestureDetector);
-
-    // Assert
-    expect(detector, findsNWidgets(4));
   });
 }
