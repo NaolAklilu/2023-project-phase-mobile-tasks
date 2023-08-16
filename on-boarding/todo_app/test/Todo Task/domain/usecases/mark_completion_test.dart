@@ -4,7 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:todo_app/Todo%20Task/domain/entities/task_domain.dart';
 import 'package:todo_app/Todo%20Task/domain/usecases/mark_completion.dart';
 
-import 'add_task_test.mocks.dart';
+import 'todo_task_test.mocks.dart';
 
 void main() {
   late MarkCompletion usecase;
@@ -27,7 +27,7 @@ void main() {
       (_) async => Right(tTask),
     );
 
-    var result = await usecase.execute(index: 0);
+    var result = await usecase(Params(index: 0));
 
     expect(result, Right(tTask));
     verify(mockTodoAppRepository.markCompletion(0));

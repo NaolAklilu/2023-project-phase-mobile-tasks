@@ -4,37 +4,36 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:todo_app/Todo%20Task/domain/entities/task_domain.dart';
 import 'package:todo_app/Todo%20Task/domain/repositories/todo_app_repository.dart';
-import 'package:todo_app/Todo%20Task/domain/usecases/add_task.dart';
+import 'package:todo_app/Todo%20Task/domain/usecases/get_task.dart';
 
-import 'add_task_test.mocks.dart';
-
-// class MockTodoAppRepository extends Mock implements TodoAppRepository {}
+import 'todo_task_test.mocks.dart';
 
 @GenerateMocks([TodoAppRepository])
 void main() {
-  late SetDate usecase;
+  late GetTask usecase;
   late MockTodoAppRepository mockTodoAppRepository;
 
   setUp(() {
     mockTodoAppRepository = MockTodoAppRepository();
-    usecase = SetDate(mockTodoAppRepository);
+    usecase = GetTask(mockTodoAppRepository);
   });
 
   final tTask = TaskDomain(
-    name: "Task 1",
+    name: "Task",
     duedate: "2023-01-01",
-    description: "description",
+    description: "Test get specific task",
     isCompleted: false,
   );
 
-  test('Should add the task to the repository', () async {
-    when(mockTodoAppRepository.setDate(any))
+  test('Should allow the user to get specific task', () async {
+    when(mockTodoAppRepository.getTask(0))
         .thenAnswer((_) async => Right(tTask));
 
-    final result = await usecase.execute(task: tTask);
+    final result = await usecase(Params(index: 0));
 
     expect(result, Right(tTask));
-    verify(mockTodoAppRepository.setDate(tTask));
+    verify(mockTodoAppRepository.getTask(0));
     verifyNoMoreInteractions(mockTodoAppRepository);
   });
 }
+
