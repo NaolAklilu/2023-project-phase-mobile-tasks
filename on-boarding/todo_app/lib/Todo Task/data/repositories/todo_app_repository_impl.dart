@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:todo_app/Todo%20Task/data/datasources/todo_task_local_data_source.dart';
 import 'package:todo_app/Todo%20Task/data/datasources/todo_task_remote_data_source.dart';
+import 'package:todo_app/Todo%20Task/data/models/task_model.dart';
 import 'package:todo_app/Todo%20Task/domain/entities/task_domain.dart';
 import 'package:todo_app/Todo%20Task/domain/repositories/todo_app_repository.dart';
 import 'package:todo_app/core/error/failures.dart';
@@ -22,9 +23,15 @@ class TodoAppRepositoryImpl implements TodoAppRepository {
   @override
   Future<Either<Failure, TaskDomain>> addTask(TaskDomain task) async {
     if (await networkInfo.isConnected) {
+      final TaskModel taskModel = TaskModel(
+          name: task.name,
+          duedate: task.duedate,
+          description: task.description,
+          isCompleted: task.isCompleted,
+          id: "10");
       try {
-        final remoteTask = await remoteDataSource.addTask(task);
-        localDataSource.cacheTask(remoteTask);
+        final remoteTask = await remoteDataSource.addTask(taskModel);
+        localDataSource.cacheTask(remoteTask.id, remoteTask);
         return Right(remoteTask);
       } on ServerException {
         return Left(ServerFailure() as Failure);
@@ -39,14 +46,14 @@ class TodoAppRepositoryImpl implements TodoAppRepository {
     if (await networkInfo.isConnected) {
       try {
         final remoteTasks = await remoteDataSource.getAllTasks();
-        localDataSource.cacheAllTasks();
+        localDataSource.cacheAllTasks("tasks", remoteTasks);
         return Right(remoteTasks);
       } on ServerException {
         return Left(ServerFailure() as Failure);
       }
     } else {
       try {
-        final localTasks = await localDataSource.getAllTasks();
+        final localTasks = await localDataSource.getAllTasks("tasks");
         return Right(localTasks);
       } on CacheException {
         return Left(CacheFailure() as Failure);
@@ -59,14 +66,14 @@ class TodoAppRepositoryImpl implements TodoAppRepository {
     if (await networkInfo.isConnected) {
       try {
         final remoteTask = await remoteDataSource.getTask(index);
-        localDataSource.cacheTask(remoteTask);
+        localDataSource.cacheTask(remoteTask.id, remoteTask);
         return Right(remoteTask);
       } on ServerException {
         return Left(ServerFailure() as Failure);
       }
     } else {
       try {
-        final localTask = await localDataSource.getLastTask();
+        final localTask = await localDataSource.getLastTask(index.toString());
         return Right(localTask);
       } on CacheException {
         return Left(CacheFailure() as Failure);
@@ -79,14 +86,14 @@ class TodoAppRepositoryImpl implements TodoAppRepository {
     if (await networkInfo.isConnected) {
       try {
         final remoteTask = await remoteDataSource.markCompletion(index);
-        localDataSource.cacheTask(remoteTask);
+        localDataSource.cacheTask(remoteTask.id, remoteTask);
         return Right(remoteTask);
       } on ServerException {
         return Left(ServerFailure() as Failure);
       }
     } else {
       try {
-        final localTask = await localDataSource.getLastTask();
+        final localTask = await localDataSource.getLastTask(index.toString());
         return Right(localTask);
       } on CacheException {
         return Left(CacheFailure() as Failure);
@@ -100,14 +107,14 @@ class TodoAppRepositoryImpl implements TodoAppRepository {
     if (await networkInfo.isConnected) {
       try {
         final remoteTask = await remoteDataSource.setDate(index, dateTime);
-        localDataSource.cacheTask(remoteTask);
+        localDataSource.cacheTask(remoteTask.id, remoteTask);
         return Right(remoteTask);
       } on ServerException {
         return Left(ServerFailure() as Failure);
       }
     } else {
       try {
-        final localTask = await localDataSource.getLastTask();
+        final localTask = await localDataSource.getLastTask(index.toString());
         return Right(localTask);
       } on CacheException {
         return Left(CacheFailure() as Failure);
