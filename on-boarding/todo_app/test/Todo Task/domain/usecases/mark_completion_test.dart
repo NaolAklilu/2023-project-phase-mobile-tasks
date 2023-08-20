@@ -27,7 +27,7 @@ void main() {
       (_) async => Right(tTask),
     );
 
-    var result = await usecase(Params(index: 0));
+    var result = await usecase(MarkCompletionParams(index: 0));
 
     expect(result, Right(tTask));
     verify(mockTodoAppRepository.markCompletion(0));

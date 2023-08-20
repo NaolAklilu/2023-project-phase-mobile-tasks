@@ -6,22 +6,22 @@ import 'package:todo_app/core/usecases/usecase.dart';
 
 import '../../../core/error/failures.dart';
 
-class SetDate implements UseCase<TaskDomain, Params> {
+class SetDate implements UseCase<TaskDomain, SetDateParams> {
   final TodoAppRepository repository;
 
   SetDate(this.repository);
 
   @override
-  Future<Either<Failure, TaskDomain>> call(Params params) async {
+  Future<Either<Failure, TaskDomain>> call(SetDateParams params) async {
     return await repository.setDate(params.index, params.dateTime);
   }
 }
 
-class Params extends Equatable {
+class SetDateParams extends Equatable {
   final int index;
   final String dateTime;
 
-  Params({required this.index, required this.dateTime});
+  SetDateParams({required this.index, required this.dateTime});
 
   @override
   List<Object?> get props => [index, dateTime];

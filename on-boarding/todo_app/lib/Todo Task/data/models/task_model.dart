@@ -17,9 +17,10 @@ class TaskModel extends TaskDomain {
             isCompleted: isCompleted);
 
   factory TaskModel.fromJson(Map<String, dynamic> json) {
+    print("$json this is the json we are expecting ");
     return TaskModel(
       id: json['id'],
-      name: json['name'],
+      name: "Naol's Task",
       duedate: json['duedate'],
       description: json['description'],
       isCompleted: json['isCompleted'],

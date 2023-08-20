@@ -8,14 +8,14 @@ import 'package:todo_app/Todo%20Task/domain/usecases/create_task.dart';
 
 import 'todo_task_test.mocks.dart';
 
-@GenerateMocks([TodoAppRepository])
+// @GenerateMocks([TodoAppRepository])
 void main() {
   late CreateTask usecase;
   late MockTodoAppRepository mockTodoAppRepository;
 
   setUp(() {
     mockTodoAppRepository = MockTodoAppRepository();
-    usecase  = CreateTask(mockTodoAppRepository);
+    usecase = CreateTask(mockTodoAppRepository);
   });
 
   final tTask = TaskDomain(
@@ -29,7 +29,7 @@ void main() {
     when(mockTodoAppRepository.addTask(tTask))
         .thenAnswer((_) async => Right(tTask));
 
-    final result = await usecase(Params(task: tTask));
+    final result = await usecase(CreateTaskParams(task: tTask));
 
     expect(result, Right(tTask));
     verify(mockTodoAppRepository.addTask(tTask));

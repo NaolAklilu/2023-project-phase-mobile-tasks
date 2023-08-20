@@ -6,21 +6,21 @@ import '../../../core/usecases/usecase.dart';
 import '../entities/task_domain.dart';
 import '../repositories/todo_app_repository.dart';
 
-class CreateTask implements UseCase<TaskDomain, Params> {
+class CreateTask implements UseCase<TaskDomain, CreateTaskParams> {
   final TodoAppRepository repository;
 
   CreateTask(this.repository);
 
   @override
-  Future<Either<Failure, TaskDomain>> call(Params params) async {
+  Future<Either<Failure, TaskDomain>> call(CreateTaskParams params) async {
     return await repository.addTask(params.task);
   }
 }
 
-class Params extends Equatable {
+class CreateTaskParams extends Equatable {
   final TaskDomain task;
 
-  Params({required this.task});
+  CreateTaskParams({required this.task});
 
   @override
   List<Object?> get props => [task];

@@ -6,19 +6,18 @@ import 'package:todo_app/Todo%20Task/domain/repositories/todo_app_repository.dar
 import '../../../core/error/failures.dart';
 import '../../../core/usecases/usecase.dart';
 
-class GetAllTasks implements UseCase<List<TaskDomain>, Params> {
+class GetAllTasks implements UseCase<List<TaskDomain>, NoParams> {
   final TodoAppRepository repository;
 
   GetAllTasks(this.repository);
 
   @override
-  Future<Either<Failure, List<TaskDomain>>> call(Params params) async {
+  Future<Either<Failure, List<TaskDomain>>> call(NoParams params) async {
     return repository.getAllTasks();
   }
 }
 
-class Params extends Equatable {
-  Params();
+class NoParams extends Equatable {
 
   @override
   List<Object?> get props => [];

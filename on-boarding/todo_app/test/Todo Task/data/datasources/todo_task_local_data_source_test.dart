@@ -51,12 +51,11 @@ void main() {
   });
 
   group('cacheTask', () {
-    const tKey = "task key";
     final tTaskModel = TaskModel.fromJson(json.decode(fixture('task.json')));
 
     test('should call SharedPreferences to cache the data', () {
       // act
-      dataSource.cacheTask(tKey, tTaskModel);
+      dataSource.cacheTask(tTaskModel);
       // assert
       final expectedJsonString = json.encode(tTaskModel.toJson());
       verify(mockSharedPreferences.setString(

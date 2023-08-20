@@ -9,7 +9,7 @@ import 'todo_task_test.mocks.dart';
 
 // class MockTodoAppRepository extends Mock implements TodoAppRepository {}
 
-@GenerateMocks([TodoAppRepository])
+// @GenerateMocks([TodoAppRepository])
 void main() {
   late SetDate usecase;
   late MockTodoAppRepository mockTodoAppRepository;
@@ -30,7 +30,7 @@ void main() {
     when(mockTodoAppRepository.setDate(any, any))
         .thenAnswer((_) async => Right(tTask));
 
-    final result = await usecase(Params(index: 0, dateTime: "2023-01-01"));
+    final result = await usecase(SetDateParams(index: 0, dateTime: "2023-01-01"));
 
     expect(result, Right(tTask));
     verify(mockTodoAppRepository.setDate(0, "2023-01-01"));

@@ -24,20 +24,21 @@ class TodoAppRepositoryImpl implements TodoAppRepository {
   Future<Either<Failure, TaskDomain>> addTask(TaskDomain task) async {
     if (await networkInfo.isConnected) {
       final TaskModel taskModel = TaskModel(
-          name: task.name,
-          duedate: task.duedate,
-          description: task.description,
-          isCompleted: task.isCompleted,
-          id: "10");
+        id: "1",
+        name: task.name,
+        duedate: task.duedate,
+        description: task.description,
+        isCompleted: task.isCompleted,
+      );
       try {
         final remoteTask = await remoteDataSource.addTask(taskModel);
-        localDataSource.cacheTask(remoteTask.id, remoteTask);
+        await localDataSource.cacheTask(remoteTask);
         return Right(remoteTask);
       } on ServerException {
-        return Left(ServerFailure() as Failure);
+        return Left(ServerFailure());
       }
     } else {
-      return Left(CacheFailure() as Failure);
+      return Left(CacheFailure());
     }
   }
 
@@ -49,14 +50,14 @@ class TodoAppRepositoryImpl implements TodoAppRepository {
         localDataSource.cacheAllTasks("tasks", remoteTasks);
         return Right(remoteTasks);
       } on ServerException {
-        return Left(ServerFailure() as Failure);
+        return Left(ServerFailure());
       }
     } else {
       try {
         final localTasks = await localDataSource.getAllTasks("tasks");
         return Right(localTasks);
       } on CacheException {
-        return Left(CacheFailure() as Failure);
+        return Left(CacheFailure());
       }
     }
   }
@@ -66,17 +67,17 @@ class TodoAppRepositoryImpl implements TodoAppRepository {
     if (await networkInfo.isConnected) {
       try {
         final remoteTask = await remoteDataSource.getTask(index);
-        localDataSource.cacheTask(remoteTask.id, remoteTask);
+        localDataSource.cacheTask(remoteTask);
         return Right(remoteTask);
       } on ServerException {
-        return Left(ServerFailure() as Failure);
+        return Left(ServerFailure());
       }
     } else {
       try {
         final localTask = await localDataSource.getLastTask(index.toString());
         return Right(localTask);
       } on CacheException {
-        return Left(CacheFailure() as Failure);
+        return Left(CacheFailure());
       }
     }
   }
@@ -86,17 +87,17 @@ class TodoAppRepositoryImpl implements TodoAppRepository {
     if (await networkInfo.isConnected) {
       try {
         final remoteTask = await remoteDataSource.markCompletion(index);
-        localDataSource.cacheTask(remoteTask.id, remoteTask);
+        localDataSource.cacheTask(remoteTask);
         return Right(remoteTask);
       } on ServerException {
-        return Left(ServerFailure() as Failure);
+        return Left(ServerFailure());
       }
     } else {
       try {
         final localTask = await localDataSource.getLastTask(index.toString());
         return Right(localTask);
       } on CacheException {
-        return Left(CacheFailure() as Failure);
+        return Left(CacheFailure());
       }
     }
   }
@@ -107,17 +108,17 @@ class TodoAppRepositoryImpl implements TodoAppRepository {
     if (await networkInfo.isConnected) {
       try {
         final remoteTask = await remoteDataSource.setDate(index, dateTime);
-        localDataSource.cacheTask(remoteTask.id, remoteTask);
+        localDataSource.cacheTask(remoteTask);
         return Right(remoteTask);
       } on ServerException {
-        return Left(ServerFailure() as Failure);
+        return Left(ServerFailure());
       }
     } else {
       try {
         final localTask = await localDataSource.getLastTask(index.toString());
         return Right(localTask);
       } on CacheException {
-        return Left(CacheFailure() as Failure);
+        return Left(CacheFailure());
       }
     }
   }

@@ -8,7 +8,7 @@ import 'package:todo_app/Todo%20Task/domain/usecases/get_task.dart';
 
 import 'todo_task_test.mocks.dart';
 
-@GenerateMocks([TodoAppRepository])
+// @GenerateMocks([TodoAppRepository])
 void main() {
   late GetTask usecase;
   late MockTodoAppRepository mockTodoAppRepository;
@@ -29,7 +29,7 @@ void main() {
     when(mockTodoAppRepository.getTask(0))
         .thenAnswer((_) async => Right(tTask));
 
-    final result = await usecase(Params(index: 0));
+    final result = await usecase(GetTaskParams(index: 0));
 
     expect(result, Right(tTask));
     verify(mockTodoAppRepository.getTask(0));

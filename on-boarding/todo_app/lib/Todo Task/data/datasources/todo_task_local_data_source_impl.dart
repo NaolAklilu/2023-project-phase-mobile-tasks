@@ -15,9 +15,10 @@ class TodoTaskLocalDataSourceImpl implements TodoTaskLocalDataSource {
   TodoTaskLocalDataSourceImpl({required this.sharedPreferences});
 
   @override
-  Future<void> cacheTask(String key, TaskModel taskToCache) {
+  Future<void> cacheTask(TaskModel taskToCache) {
+    print("******** $taskToCache");
     return sharedPreferences.setString(
-      key,
+      CACHED_TASK,
       json.encode(taskToCache.toJson()),
     );
   }

@@ -6,21 +6,21 @@ import 'package:todo_app/core/usecases/usecase.dart';
 
 import '../entities/task_domain.dart';
 
-class GetTask implements UseCase<TaskDomain, Params> {
+class GetTask implements UseCase<TaskDomain, GetTaskParams> {
   final TodoAppRepository repository;
 
   GetTask(this.repository);
 
   @override
-  Future<Either<Failure, TaskDomain>> call(Params params) async {
+  Future<Either<Failure, TaskDomain>> call(GetTaskParams params) async {
     return await repository.getTask(params.index);
   }
 }
 
-class Params extends Equatable {
+class GetTaskParams extends Equatable {
   final int index;
 
-  Params({required this.index});
+  GetTaskParams({required this.index});
 
   @override
   List<Object?> get props => [index];

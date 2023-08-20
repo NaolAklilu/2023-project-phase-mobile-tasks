@@ -6,21 +6,21 @@ import 'package:todo_app/core/usecases/usecase.dart';
 
 import '../../../core/error/failures.dart';
 
-class MarkCompletion implements UseCase<TaskDomain, Params> {
+class MarkCompletion implements UseCase<TaskDomain, MarkCompletionParams> {
   final TodoAppRepository repository;
 
   MarkCompletion(this.repository);
 
   @override
-  Future<Either<Failure, TaskDomain>> call(Params params) async {
+  Future<Either<Failure, TaskDomain>> call(MarkCompletionParams params) async {
     return await repository.markCompletion(params.index);
   }
 }
 
-class Params extends Equatable {
+class MarkCompletionParams extends Equatable {
   final int index;
 
-  Params({required this.index});
+  MarkCompletionParams({required this.index});
 
   @override
   List<Object?> get props => [index];
